@@ -1,15 +1,16 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
+  <div class="header">
+    我是header
   </div>
 </template>
-
 <script>
 export default {
-  name: 'app'
+  name: 'Header',
+  data () {
+
+  }
 }
 </script>
-
 <style>
 
 </style>
