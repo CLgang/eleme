@@ -13,7 +13,7 @@
           <router-link to="/seller">商家</router-link>
         </div>
       </div>
-      <router-view></router-view>
+      <router-view :seller="seller"></router-view>
     </div>
   </div>
 </template>
@@ -32,7 +32,6 @@ export default {
       response = response.body;
       if (response.errno === 0) {
         this.seller = response.data;
-        console.log(this.seller)
       }
     })
   },
@@ -43,7 +42,8 @@ export default {
 </script>
 
 <style>
-  @import "common/icon.css";
+  @import "common/css/icon.css";
+  @import "common/css/base.css";
   .tab {
     display: flex;
     width: 100%;

@@ -1,0 +1,8 @@
+[1010/195014.793:ERROR:process_info.cc(632)] range at 0xfedb59b000000000, size 0x247 fully unreadable
+[1010/195014.797:ERROR:process_info.cc(632)] range at 0xfedb5a1800000000, size 0x247 fully unreadable
+[1010/195014.797:ERROR:process_info.cc(632)] range at 0x0, size 0x247 fully unreadable
+[1010/221310.781:ERROR:process_info.cc(632)] range at 0xf94d59ae00000000, size 0x1bf fully unreadable
+[1010/221310.781:ERROR:process_info.cc(632)] range at 0xf94d5a1600000000, size 0x1bf fully unreadable
+[1010/221310.781:ERROR:process_info.cc(632)] range at 0x0, size 0x1bf fully unreadable
+[1010/221310.790:ERROR:process_reader_win.cc(242)] ReadMemory at 0x1bffa230080 of 32768 bytes failed: 仅完成部分的 ReadProcessMemory 或 WriteProcessMemory 请求。 (0x12B)
+[1010/221310.791:WARNING:pe_image_annotations_reader.cc(65)] could not read simple annotations from C:\Program Files (x86)\Google\Chrome\Application\61.0.3163.79\chrome_elf.dll
