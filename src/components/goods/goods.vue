@@ -31,7 +31,8 @@
                   <span class="old" v-show="food.oldPrice">￥{{ food.oldPrice }}</span>
                 </div>
                 <div class="cart-control-wrapper">
-                  <CartControl :food="food"></CartControl>
+                  <CartControl :food="food" @increment="_drop"></CartControl>
+                  <!--<CartControl :food="food"></CartControl>-->
                 </div>
               </div>
             </li>
@@ -39,7 +40,7 @@
         </li>
       </ul>
     </div>
-    <ShopCart :select-foods="selectFoods" ref="shopCart" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></ShopCart>
+    <ShopCart ref="shopCart" :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></ShopCart>
   </div>
 </template>
 <script>
@@ -94,9 +95,6 @@ export default {
         })
       }
     })
-//    this.$store.eventHub.$emit('eventHubElement', function (val) {
-//      this._drop(val)
-//    })
   },
   methods: {
     initScroll() {
@@ -125,9 +123,12 @@ export default {
       let item = foodList[index];
       this.foodsScroll.scrollToElement(item, 200)
     },
-//    _drop(target) {
-//      this.$refs.shopCart.drop(target);
-//    }
+    _drop(target) {
+      // 体验优化，异步执行
+      this.$nextTick(() => {
+        this.$refs.shopCart.drop(target);
+      })
+    }
   },
   components: {
     ShopCart,

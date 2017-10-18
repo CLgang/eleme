@@ -1,5 +1,5 @@
 <template>
-  <div class="shopcart">
+  <div class="shop-cart">
     <div class="content">
       <div class="content-left">
         <div class="logo-wrapper">
@@ -16,8 +16,12 @@
       </div>
     </div>
     <div class="ball-container">
-      <div v-for="ball in balls" v-show="ball.show" class="ball">
-        <div class="inner"></div>
+      <div v-for="ball in balls">
+        <transition name="drop" @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+          <div v-show="ball.show" class="ball">
+            <div class="inner inner-hook"></div>
+          </div>
+        </transition>
       </div>
     </div>
   </div>
@@ -47,6 +51,7 @@ export default {
   },
   data() {
     return {
+      dropBalls: [],
       balls: [
         {
           show: false
@@ -67,9 +72,9 @@ export default {
     }
   },
   created() {
-    this.$store.eventHub.$on('eventHubElement', function(val){
-      console.log(val)
-    })
+//    this.$store.eventHub.$on('eventHubElement', (val) => {
+//      this.drop(val)
+//    })
   },
   computed:{
     totalPrice() {
@@ -105,14 +110,57 @@ export default {
     }
   },
   methods: {
-//    addCart(el) {
-//      console.log(el)
-//    }
+    drop(el) {
+      for (let i = 0; i < this.balls.length; i++) {
+        let ball = this.balls[i];
+        if (!ball.show) {
+          ball.show = true;
+          ball.el = el;
+          this.dropBalls.push(ball);
+          return;
+        }
+      }
+    },
+    beforeEnter(el) {
+      let count = this.balls.length;
+      while(count--) {
+        let ball = this.balls[count];
+        if (ball.show) {
+          let rect = ball.el.getBoundingClientRect();
+          let x = rect.left - 32;
+          let y = -(window.innerHeight - rect.top - 22);
+          el.style.display = '';
+          el.style.webkitTransform = `translate3d(0, ${y}px, 0)`;
+          el.style.transform = `translate3d(0, ${y}px, 0)`;
+          let inner = el.getElementsByClassName('inner-hook')[0];
+          inner.style.webkitTransform = `translate3d(${x}px, 0, 0)`;
+          inner.style.transform = `translate3d(${x}px, 0, 0)`;
+        }
+      }
+    },
+    enter(el) {
+      let rf = el.offsetHeight;
+      this.$nextTick(() => {
+        el.style.webkitTransform = 'translate3d(0, 0, 0)';
+        el.style.transform = 'translate3d(0, 0, 0)';
+        let inner = el.getElementsByClassName('inner-hook')[0];
+        inner.style.webkitTransform = 'translate3d(0, 0, 0)';
+        inner.style.transform = 'translate3d(0, 0, 0)';
+      })
+    },
+    afterEnter(el) {
+      let ball = this.dropBalls.shift();
+      if (ball) {
+        ball.show = false;
+        el.style.display = 'none';
+      }
+    }
   }
+
 }
 </script>
 <style>
-  .shopcart{
+  .shop-cart{
     position: fixed;
     left: 0;
     bottom: 0;
@@ -120,7 +168,7 @@ export default {
     width: 100%;
     height: 48px;
   }
-  .shopcart .content{
+  .shop-cart .content{
     display: flex;
     background: #141d27;
   }
@@ -232,22 +280,17 @@ export default {
     left: 32px;
     bottom: 22px;
     z-index: 200;
-  }
-  .ball-container .ball.drop-transition{
-    -webkit-transition: all 0.4s;
-    -moz-transition: all 0.4s;
-    -ms-transition: all 0.4s;
-    -o-transition: all 0.4s;
-    transition: all 0.4s;
+    -webkit-transition: all .4s cubic-bezier(.49, -.29, .75, .41);
+    transition: all .4s cubic-bezier(.49, -.29, .75, .41);
   }
   .ball-container .ball .inner{
     width: 16px;
     height: 16px;
     -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
     border-radius: 50%;
     background: rgb(0, 160, 220);
-    transition: all 0.4s;
+    -webkit-transition: all .4s linear;
+    transition: all .4s linear;
   }
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="cartcontrol">
+  <div class="cart-control">
     <transition name="move">
       <div class="cart-decrease" v-show="food.count > 0" @click="decreaseCount">
         <span class="inner icon-remove_circle_outline"></span>
@@ -27,9 +27,8 @@ export default {
       } else {
         this.food.count ++
       }
-//      this.$store.dispatch('cartAdd', event.target)
-//      this.eventHub.$emit('add-cart', event.target)
-      this.$store.eventHub.$emit('eventHubElement', event.target)
+//      this.$store.eventHub.$emit('eventHubElement', event.target)
+      this.$emit('increment', event.target)
     },
     decreaseCount() {
       if(this.food.count) {
@@ -40,52 +39,40 @@ export default {
 }
 </script>
 <style>
-  .cartcontrol{
+  .cart-control{
     font-size: 0;
   }
-  .cartcontrol .cart-add{
+  .cart-control .cart-add{
     display: inline-block;
     padding: 6px;
     line-height: 24px;
     font-size: 24px;
     color: rgb(0, 160, 220);
   }
-  .cartcontrol .cart-decrease{
+  .cart-control .cart-decrease{
     display: inline-block;
     padding: 6px;
     -webkit-transition: all 0.4s linear;
-    -moz-transition: all 0.4s linear;
-    -ms-transition: all 0.4s linear;
-    -o-transition: all 0.4s linear;
     transition: all 0.4s linear;
   }
   .move-enter-active, .move-leave-active{
     opacity: 1;
-    -webkit-transform: translate3D(0, 0, 0) rotate(0);
-    -moz-transform: translate3D(0, 0, 0) rotate(0);
-    -ms-transform: translate3D(0, 0, 0) rotate(0);
-    -o-transform: translate3D(0, 0, 0) rotate(0);
-    transform: translate3D(0, 0, 0) rotate(0);
+    -webkit-transform: translate3d(0, 0, 0) rotate(0);
+    transform: translate3d(0, 0, 0) rotate(0);
   }
   .move-enter,.move-leave-to{
     opacity: 0;
-    -webkit-transform: translate3D(24px, 0, 0) rotate(180deg);
-    -moz-transform: translate3D(24px, 0, 0) rotate(180deg);
-    -ms-transform: translate3D(24px, 0, 0) rotate(180deg);
-    -o-transform: translate3D(24px, 0, 0) rotate(180deg);
-    transform: translate3D(24px, 0, 0) rotate(180deg);
+    -webkit-transform: translate3d(24px, 0, 0) rotate(180deg);
+    transform: translate3d(24px, 0, 0) rotate(180deg);
   }
   .cart-decrease .inner{
     line-height: 24px;
     font-size: 24px;
     color: rgb(0, 160, 220);
     -webkit-transition: all 0.4s linear;
-    -moz-transition: all 0.4s linear;
-    -ms-transition: all 0.4s linear;
-    -o-transition: all 0.4s linear;
     transition: all 0.4s linear;
   }
-  .cartcontrol .cart-count{
+  .cart-control .cart-count{
     display: inline-block;
     vertical-align: top;
     width: 12px;
