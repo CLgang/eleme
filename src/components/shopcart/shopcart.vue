@@ -1,6 +1,6 @@
 <template>
   <div class="shop-cart">
-    <div class="content">
+    <div class="content" @click="toggleList">
       <div class="content-left">
         <div class="logo-wrapper">
           <div class="logo" :class="{'highlight':totalCount > 0}">
@@ -11,7 +11,7 @@
         <div class="price" :class="{'highlight':totalPrice > 0}">￥{{ totalPrice }}</div>
         <div class="desc">另需配送费￥{{ deliveryPrice }}元</div>
       </div>
-      <div class="content-right">
+      <div class="content-right" @click.stop.prevent="payoff">
         <div class="pay" :class="payClass">{{ payDesc }}</div>
       </div>
     </div>
@@ -24,9 +24,35 @@
         </transition>
       </div>
     </div>
+    <transition name="fold">
+      <div class="shopCart-list" v-show="listShow">
+        <div class="list-header">
+          <div class="title">购物车</div>
+          <div class="clear" @click="clear">清空</div>
+        </div>
+        <div class="list-content" ref="listContent">
+          <ul>
+            <li class="food" v-for="food in selectFoods">
+              <span class="name">{{ food.name }}</span>
+              <div class="price">
+                <span>￥{{ food.price*food.count }}</span>
+              </div>
+              <div class="cartControl-wrapper">
+                <CartControl :food="food"></CartControl>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </transition>
+    <transition name="fade">
+      <div class="list-mask" v-show="listShow" @click="hideList"></div>
+    </transition>
   </div>
 </template>
 <script>
+import CartControl from '../cartcontrol/cartcontrol.vue'
+import BScroll from 'better-scroll'
 export default {
   props: {
     selectFoods:{
@@ -68,7 +94,8 @@ export default {
         {
           show: false
         }
-      ]
+      ],
+      fold: true
     }
   },
   created() {
@@ -107,6 +134,25 @@ export default {
       } else {
         return 'enough'
       }
+    },
+    listShow() {
+      if (!this.totalCount) {
+        this.fold = true;
+        return false
+      }
+      let show = !this.fold;
+      if (show) {
+        this.$nextTick(() => {
+          if (!this.scroll) {
+            this.scroll = new BScroll(this.$refs.listContent, {
+              click: true
+            })
+          } else {
+            this.scroll.refresh()
+          }
+        })
+      }
+      return show
     }
   },
   methods: {
@@ -154,7 +200,30 @@ export default {
         ball.show = false;
         el.style.display = 'none';
       }
-    }
+    },
+    toggleList() {
+      if (!this.totalCount) {
+        return;
+      }
+      this.fold = !this.fold
+    },
+    clear() {
+      this.selectFoods.forEach((food) => {
+        food.count = 0
+      })
+    },
+    hideList() {
+      this.fold = true
+    },
+    payoff() {
+      if (this.totalPrice < this.minPrice) {
+        return;
+      }
+      window.alert(`可以支付${this.totalPrice}元`)
+    },
+  },
+  components: {
+    CartControl
   }
 
 }
@@ -291,6 +360,89 @@ export default {
     background: rgb(0, 160, 220);
     -webkit-transition: all .4s linear;
     transition: all .4s linear;
+  }
+
+  .shopCart-list{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    -webkit-transition: all .4s;
+    transition: all .4s;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+  .fold-enter,.fold-leave-to{
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0)
+  }
+  .shopCart-list .list-header{
+    height: 40px;
+    line-height: 40px;
+    padding: 0 18px;
+    background: #f3f5f7;
+    border-bottom: 1px solid rgba(7, 17, 27, .1);
+  }
+  .shopCart-list .list-header .title{
+    float: left;
+    font-size: 14px;
+    color: rgb(7, 17, 27);
+  }
+  .shopCart-list .list-header .clear{
+    float: right;
+    font-size: 12px;
+    color: rgb(0, 120, 220)
+  }
+  .shopCart-list .list-content{
+    padding: 0 18px;
+    max-height: 217px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .shopCart-list .list-content .food{
+    position: relative;
+    padding: 12px 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(7, 17, 27, .1);
+  }
+  .list-content .food .name{
+    line-height: 24px;
+    font-size: 14px;
+    color: rgb(7, 17, 27);
+  }
+  .list-content .food .price{
+    position: absolute;
+    right: 90px;
+    bottom: 12px;
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: 700;
+    color: rgb(240, 20, 20);
+  }
+  .list-content .food .cartControl-wrapper{
+    position: absolute;
+    right: 0;
+    top: 6px;
+  }
+  .list-mask{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    -webkit-backdrop-filter: blur(10px);
+    -webkit-transition: all .4s;
+    transition: all .4s;
+    opacity: 1;
+    background: rgba(7, 17, 27, .6);
+  }
+  .fade-enter,.fade-leave-to{
+    opacity: 0;
+    background: rgba(7, 17, 27, 0);
   }
 
 </style>
