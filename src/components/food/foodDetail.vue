@@ -120,15 +120,21 @@ export default {
       }
     },
     _selectType(type) {
-      this.selectType = type
+      this.selectType = type;
+//      this.$nextTick(() => {
+//        this.scroll.refresh()
+//      })
     },
     _onlyContent(ratingOnlyContent) {
-      this.onlyContent = ratingOnlyContent
+      this.onlyContent = ratingOnlyContent;
+//      this.$nextTick(() => {
+//        this.scroll.refresh()
+//      })
     }
   },
   filters: {
     formatDate(time) {
-      let date = new Date(time)
+      let date = new Date(time);
       return formatDate(date, 'yyyy-MM-dd hh:mm')
     }
   },

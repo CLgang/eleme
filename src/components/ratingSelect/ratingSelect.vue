@@ -12,7 +12,7 @@
       </span>
     </div>
     <div @click="switchContent" class="switch">
-      <i class="icon-check_circle" :class="{'on': ratingOnlyContent}"></i>
+      <i class="icon-check_circle" :class="{'on': onlyContent}"></i>
       <span class="text">只看有内容的评价</span>
     </div>
   </div>
@@ -49,6 +49,12 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      selectType: '',
+      onlyContent: '',
+    }
+  },
   computed: {
     positives() {
       return this.ratings.filter((rating) => {
@@ -63,12 +69,12 @@ export default {
   },
   methods: {
     select(type) {
-      this.ratingSelectType = type;
+      this.selectType = type;
       this.$emit('ratingSelectType', type)
     },
     switchContent() {
-      this.ratingOnlyContent = !this.ratingOnlyContent;
-      this.$emit('ratingOnlyContent', this.ratingOnlyContent)
+      this.onlyContent = !this.ratingOnlyContent;
+      this.$emit('ratingOnlyContent', this.onlyContent)
     }
   }
 }
