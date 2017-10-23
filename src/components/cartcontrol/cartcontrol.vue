@@ -1,12 +1,12 @@
 <template>
   <div class="cart-control">
     <transition name="move">
-      <div class="cart-decrease" v-show="food.count > 0" @click="decreaseCount">
+      <div class="cart-decrease" v-show="food.count > 0" @click.stop.prevent="decreaseCount">
         <span class="inner icon-remove_circle_outline"></span>
       </div>
     </transition>
     <div class="cart-count" v-show="food.count > 0">{{ food.count }}</div>
-    <div class="cart-add icon-add_circle" @click="addCart"></div>
+    <div class="cart-add icon-add_circle" @click.stop.prevent="addCart"></div>
   </div>
 </template>
 <script>
@@ -27,8 +27,8 @@ export default {
       } else {
         this.food.count ++
       }
-//      this.$store.eventHub.$emit('eventHubElement', event.target)
-      this.$emit('increment', event.target)
+      this.$store.eventHub.$emit('eventHubElement', event.target)
+//      this.$emit('increment', event.target)
     },
     decreaseCount() {
       if(this.food.count) {
@@ -55,12 +55,12 @@ export default {
     -webkit-transition: all 0.4s linear;
     transition: all 0.4s linear;
   }
-  .move-enter-active, .move-leave-active{
+  .cart-decrease.move-enter-active, .move-leave-active{
     opacity: 1;
     -webkit-transform: translate3d(0, 0, 0) rotate(0);
     transform: translate3d(0, 0, 0) rotate(0);
   }
-  .move-enter,.move-leave-to{
+  .cart-decrease.move-enter,.move-leave-to{
     opacity: 0;
     -webkit-transform: translate3d(24px, 0, 0) rotate(180deg);
     transform: translate3d(24px, 0, 0) rotate(180deg);

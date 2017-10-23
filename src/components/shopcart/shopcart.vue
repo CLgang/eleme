@@ -99,9 +99,9 @@ export default {
     }
   },
   created() {
-//    this.$store.eventHub.$on('eventHubElement', (val) => {
-//      this.drop(val)
-//    })
+    this.$store.eventHub.$on('eventHubElement', (val) => {
+      this.drop(val)
+    })
   },
   computed:{
     totalPrice() {

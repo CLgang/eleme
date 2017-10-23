@@ -16,7 +16,7 @@
         <li v-for="item in goods" class="food-list food-list-hook">
           <h1 class="title">{{ item.name }}</h1>
           <ul>
-            <li v-for="food in item.foods" class="food-item">
+            <li @click="selectFood(food)" v-for="food in item.foods" class="food-item">
               <div class="icon">
                 <img width="57" height="57" :src="food.icon">
               </div>
@@ -31,7 +31,7 @@
                   <span class="old" v-show="food.oldPrice">￥{{ food.oldPrice }}</span>
                 </div>
                 <div class="cart-control-wrapper">
-                  <CartControl :food="food" @increment="_drop"></CartControl>
+                  <CartControl :food="food"></CartControl>
                   <!--<CartControl :food="food"></CartControl>-->
                 </div>
               </div>
@@ -41,12 +41,14 @@
       </ul>
     </div>
     <ShopCart ref="shopCart" :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></ShopCart>
+    <FoodDetail ref="foodDetail" :food="selectedFoods" @increment="_drop"></FoodDetail>
   </div>
 </template>
 <script>
 import BScroll from 'better-scroll'
 import ShopCart from '../shopcart/shopcart.vue'
 import CartControl from '../cartcontrol/cartcontrol.vue'
+import FoodDetail from '../food/foodDetail.vue'
 export default {
   props:{
     seller:{
@@ -57,7 +59,8 @@ export default {
     return{
       goods: [],
       listHeight: [],
-      scrollY: 0
+      scrollY: 0,
+      selectedFoods: {}
     }
   },
   computed: {
@@ -104,7 +107,8 @@ export default {
       });
       this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
         click: true,
-        probeType: 3
+        probeType: 3,
+
       });
       this.foodsScroll.on('scroll', (pos) => {
         this.scrollY = Math.abs(Math.round(pos.y));
@@ -129,11 +133,16 @@ export default {
       this.$nextTick(() => {
         this.$refs.shopCart.drop(target);
       })
+    },
+    selectFood(food){
+      this.selectedFoods = food;
+      this.$refs.foodDetail.show()
     }
   },
   components: {
     ShopCart,
-    CartControl
+    CartControl,
+    FoodDetail
   }
 }
 </script>
