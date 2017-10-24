@@ -30,3 +30,5 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 8. shopcart/shopcart.vue --- 购物车详情
 9. split/split.vue --- 有一定高度的分割组件
 10. star/star.vue --- 评价的星级组件
+
+prod.server.js
