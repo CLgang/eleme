@@ -67,33 +67,33 @@
   </div>
 </template>
 <script>
-import Star from '../star/star.vue'
-export default {
-  props: {
-    seller: {
-      type: Object
-    }
-  },
-  data() {
-    return {
-      detailShow: false
-    }
-  },
-  methods:{
-    showDetail() {
-      this.detailShow = true
+  import Star from '../star/star.vue'
+  export default {
+    props: {
+      seller: {
+        type: Object
+      }
     },
-    hideDetail() {
-      this.detailShow = false
+    data() {
+      return {
+        detailShow: false
+      }
+    },
+    methods:{
+      showDetail() {
+        this.detailShow = true
+      },
+      hideDetail() {
+        this.detailShow = false
+      }
+    },
+    created() {
+      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+    },
+    components: {
+      Star
     }
-  },
-  created() {
-    this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
-  },
-  components: {
-    Star
   }
-}
 </script>
 <style>
   .header{
@@ -173,7 +173,6 @@ export default {
     line-height: 12px;
     font-size: 10px;
   }
-
   .support-count{
     position: absolute;
     right: 12px;
@@ -196,7 +195,6 @@ export default {
     line-height: 24px;
     font-size: 10px;
   }
-
   .bulletin-wrapper{
     position: relative;
     height: 28px;
@@ -238,7 +236,6 @@ export default {
     z-index: -1;
     filter: blur(10px)
   }
-
   .detail{
     position: fixed;
     top: 0;

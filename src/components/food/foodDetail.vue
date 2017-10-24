@@ -121,15 +121,15 @@ export default {
     },
     _selectType(type) {
       this.selectType = type;
-//      this.$nextTick(() => {
-//        this.scroll.refresh()
-//      })
+      this.$nextTick(() => {
+        this.scroll.refresh()
+      })
     },
     _onlyContent(ratingOnlyContent) {
       this.onlyContent = ratingOnlyContent;
-//      this.$nextTick(() => {
-//        this.scroll.refresh()
-//      })
+      this.$nextTick(() => {
+        this.scroll.refresh()
+      })
     }
   },
   filters: {

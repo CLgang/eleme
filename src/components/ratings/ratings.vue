@@ -197,69 +197,69 @@ export default {
     margin-left: 12px;
   }
 
-  .rating-wrapper{
+  .ratings-content .rating-wrapper{
     padding: 0 18px;
   }
-  .rating-wrapper .rating-item{
+  .ratings-content .rating-wrapper .rating-item{
     display: flex;
     padding: 18px 0;
     border-bottom: 1px solid rgba(7, 17, 27, .1)
   }
-  .rating-item .avatar{
+  .ratings-content .rating-item .avatar{
     flex: 0 0 28px;
     width: 28px;
     margin-right: 12px;
   }
-  .rating-item .avatar img{
+  .ratings-content .rating-item .avatar img{
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
   }
-  .rating-item .content{
+  .ratings-content .rating-item .content{
     position: relative;
     flex: 1;
   }
-  .rating-item .content .name{
+  .ratings-content .rating-item .content .name{
     margin-bottom: 4px;
     line-height: 12px;
     font-size: 10px;
     color: rgb(7, 17, 27);
   }
-  .star-wrapper{
+  .ratings-content .star-wrapper{
     margin-bottom: 6px;
     font-size: 0;
   }
-  .star-wrapper .star{
+  .ratings-content .star-wrapper .star{
     display: inline-block;
     vertical-align: top;
     margin-right: 6px;
   }
-  .star-wrapper .delivery{
+  .ratings-content .star-wrapper .delivery{
     display: inline-block;
     vertical-align: top;
     font-size: 10px;
     color: rgb(147, 153, 159);
   }
 
-  .rating-item .content .text{
+  .ratings-content .rating-item .content .text{
     margin-bottom: 8px;
     line-height: 18px;
     color: rgb(7, 17, 27);
     font-size: 12px;
   }
-  .rating-item .content .recommend{
+  .ratings-content .rating-item .content .recommend{
     line-height: 16px;
     font-size: 0;
   }
-  .recommend .icon-thumb_up, .recommend .item{
+  .ratings-content .recommend .icon-thumb_up, .recommend .item{
     display: inline-block;
     margin: 0 8px 4px 0;
     font-size: 9px;
   }
-  .icon-thumb_up{
+  .ratings-content .icon-thumb_up{
     color: rgb(0, 160, 220);
   }
-  .item{
+  .ratings-content .recommend .item{
     padding: 0 6px;
     border: 1px solid rgba(7, 17, 27, .1);
     -webkit-border-radius: 1px;
@@ -268,7 +268,7 @@ export default {
     color: rgb(147, 153, 159);
     background: #fff;
   }
-  .rating-item .content .time{
+  .ratings-content .rating-item .content .time{
     position: absolute;
     top: 0;
     right: 0;
